@@ -103,16 +103,27 @@ body{overflow-x:hidden}
 .wheel::before,.wheel::after{border-color:color-mix(in srgb,var(--accent) 35%,transparent)}
 .tl li::before{box-shadow:0 0 0 6px color-mix(in srgb,var(--signal) 30%,transparent)}
 @media (prefers-reduced-motion:reduce){.card,.btn{transition:none}.card:hover,.btn:hover{transform:none}}
+
+.progress{position:absolute;left:0;bottom:-1px;height:3px;width:100%;background:linear-gradient(90deg,var(--accent),var(--signal));transform:scaleX(0);transform-origin:0 50%}
+#name.typing #n2{color:transparent}
+#name.typing #n1{border-right:.06em solid var(--accent);margin-right:-.06em;animation:blink .8s steps(1) infinite}
+@keyframes blink{50%{border-color:transparent}}
+@media (prefers-reduced-motion:reduce){#name.typing #n1{animation:none}}
+
+.stats{grid-template-columns:repeat(5,1fr);gap:1px;background:var(--line)}
+.stats div{border:0;background:var(--panel)}
+@media (max-width:900px){.stats{grid-template-columns:repeat(2,1fr)}.stats div:last-child{grid-column:1/-1}}
+@media (max-width:480px){.stats{grid-template-columns:1fr}.stats b{font-size:34px}}
 </style>
 </head>
 <body>
 <div class="topbar"><div class="wrap"><nav aria-label="Main">
   <a class="logo" href="#top">HS</a>
   <div class="links"><a href="#experience">Experience</a><a href="#projects">Projects</a><a href="#skills">Skills</a><a href="#contact">Contact</a></div>
-</nav></div></div>
+</nav></div><div class="progress" id="progress"></div></div>
 <div class="wrap">
 <header class="hero" id="top">
-  <h1>Harmanjeet Singh</h1>
+  <h1 id="name" aria-label="Harmanjeet Singh"><span id="n1" aria-hidden="true"></span><span id="n2" aria-hidden="true">Harmanjeet Singh</span></h1>
   <p class="lead">I build full-stack web apps and the automated tests behind them. Today I ship logistics software for a courier company, and I started in electronics, so I'm just as comfortable debugging a machine as a React component.</p>
   <svg class="trace" viewBox="0 0 1000 120" role="img" aria-label="A signal line that starts as a flat hardware trace and ends as a code bracket">
     <path d="M0 80 H120 L140 80 L160 30 L190 105 L215 55 L235 80 H380 V40 H440 V80 H520 V40 H580 V80 H700 L730 20 L700 60 M770 20 L800 60 L770 100 M840 80 H1000"/>
@@ -128,7 +139,8 @@ body{overflow-x:hidden}
 
 <section style="border-top:0;padding-top:24px"><div class="wrap">
   <div class="stats">
-    <div><b>200%</b><span>AOI machine productivity gain from LabVIEW automation</span></div>
+    <div><b>200%</b><span>profit growth the inventory system helped drive at M5C</span></div>
+    <div><b>1,600+</b><span>commits across the logistics software and Manvi website</span></div>
     <div><b>410+</b><span>problems solved on LeetCode and GeeksforGeeks</span></div>
     <div><b>Top 20%</b><span>rank (4217 of 21482) in a LeetCode contest</span></div>
     <div><b>7</b><span>full-stack projects shipped, 5 of them at M5C Logistics</span></div>
@@ -199,21 +211,21 @@ body{overflow-x:hidden}
     </article>
     <article class="card">
       <h3>M5C Portal</h3>
-      <p>The company portal for M5C Logistics, built with Next.js, TypeScript, Node.js and MongoDB. Together with the logistics software it helped grow profit by 100%.</p>
+      <p>The web portal for M5C Logistics, where shipments, manifests and logistics are managed. Built with Next.js, TypeScript, Node.js and MongoDB. Together with the logistics software it helped grow profit by 100%.</p>
       <div class="tags"><span>Next.js</span><span>TypeScript</span><span>Node.js</span><span>MongoDB</span></div>
-      <a class="btn" href="https://github.com/M5Csoftware/m5c-portal" target="_blank" rel="noopener">View on GitHub</a>
+      <div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn primary" href="https://m5c-portal.vercel.app/" target="_blank" rel="noopener">Visit site</a><a class="btn" href="https://github.com/M5Csoftware/m5c-portal" target="_blank" rel="noopener">GitHub</a></div>
     </article>
     <article class="card">
       <h3>Inventory Management</h3>
-      <p>An inventory system that tracks all of the company's stock data in one place. It helped increase profit by 200%.</p>
+      <p>The inventory management system for M5C Logistics. It tracks all of the company's stock data in one place. It helped increase profit by 200%.</p>
       <div class="tags"><span>Next.js</span><span>Node.js</span><span>MongoDB</span><span>Redis</span></div>
-      <a class="btn" href="https://github.com/M5Csoftware/inventory-management" target="_blank" rel="noopener">View on GitHub</a>
+      <div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn primary" href="https://inventory-management-lime-five.vercel.app/" target="_blank" rel="noopener">Visit site</a><a class="btn" href="https://github.com/M5Csoftware/inventory-management" target="_blank" rel="noopener">GitHub</a></div>
     </article>
     <article class="card">
       <h3>Voice Invoice Registration</h3>
       <p>Lets staff register invoices by speaking instead of typing them in by hand. A Google AI speech API detects the spoken words clearly, so what is said ends up in the invoice.</p>
       <div class="tags"><span>Next.js</span><span>TypeScript</span><span>Node.js</span><span>MongoDB</span><span>Google AI API</span></div>
-      <a class="btn" href="https://github.com/M5Csoftware/invoice-registration" target="_blank" rel="noopener">View on GitHub</a>
+      <div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn primary" href="https://invoice-registration.vercel.app/#dashboard" target="_blank" rel="noopener">Visit site</a><a class="btn" href="https://github.com/M5Csoftware/invoice-registration" target="_blank" rel="noopener">GitHub</a></div>
     </article>
     <article class="card">
       <h3>Manvi International Courier</h3>
@@ -298,6 +310,26 @@ function ring(list,radius,time,rev){
 ring(outer,225,50,false);ring(inner,125,36,true);
 function fit(){wheel.style.transform="scale("+(box.clientWidth/600)+")"}
 fit();window.addEventListener("resize",fit);
+})();
+</script>
+<script>
+(function(){
+var h=document.getElementById("name"),a=document.getElementById("n1"),b=document.getElementById("n2"),full="Harmanjeet Singh";
+var reduce=window.matchMedia("(prefers-reduced-motion:reduce)").matches;
+if(!reduce){
+  h.classList.add("typing");var i=0;
+  (function step(){
+    i++;a.textContent=full.slice(0,i);b.textContent=full.slice(i);
+    if(i<full.length){setTimeout(step,70)}else{setTimeout(function(){h.classList.remove("typing")},900)}
+  })();
+}
+var bar=document.getElementById("progress"),tick=false;
+function upd(){
+  var max=document.documentElement.scrollHeight-window.innerHeight;
+  bar.style.transform="scaleX("+(max>0?Math.min(1,window.scrollY/max):0)+")";tick=false;
+}
+window.addEventListener("scroll",function(){if(!tick){tick=true;requestAnimationFrame(upd)}},{passive:true});
+window.addEventListener("resize",upd);upd();
 })();
 </script>
 </body>
