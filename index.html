@@ -513,6 +513,106 @@ section > .wrap > h2 .num{
   font-style:italic;
 }
 
+/* ============= CONTRIBUTIONS ============= */
+.contrib-wrap{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:28px;
+  backdrop-filter:blur(20px);
+  overflow-x:auto;
+}
+.contrib-top{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:24px;flex-wrap:wrap;gap:10px;
+}
+.contrib-top .total{
+  font-size:15px;
+  color:var(--muted);
+  font-family:"Inter",sans-serif;
+}
+.contrib-top .total b{color:var(--ink);font-weight:700}
+.contrib-top .settings{
+  font-size:14px;
+  color:var(--muted);
+  display:flex;align-items:center;gap:6px;
+  cursor:pointer;transition:color 0.25s var(--ease);
+  font-family:"Inter",sans-serif;
+}
+.contrib-top .settings:hover{color:var(--ink)}
+.contrib-top .settings svg{width:12px;height:12px;transition:transform 0.25s var(--ease)}
+.contrib-top .settings:hover svg{transform:translateY(2px)}
+
+/* Grid layout — 7 rows of cells + 1 label column */
+.contrib-grid{
+  display:grid;
+  grid-template-columns:auto repeat(53, 14px);
+  grid-template-rows:20px repeat(7, 14px);
+  gap:3px;
+  min-width:820px;
+  font-family:"Inter",sans-serif;
+  font-size:11px;
+  color:var(--muted);
+}
+
+/* Month labels row */
+.contrib-grid .month{
+  grid-row:1;
+  display:flex;
+  align-items:flex-end;
+  padding-bottom:2px;
+  font-size:11px;
+  color:var(--muted);
+  white-space:nowrap;
+}
+
+/* Day labels column */
+.contrib-grid .day-label{
+  grid-column:1;
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  padding-right:8px;
+  font-size:11px;
+  color:var(--muted);
+  white-space:nowrap;
+  line-height:1;
+}
+
+/* Cells */
+.contrib-grid .cell{
+  width:14px;
+  height:14px;
+  border-radius:3px;
+  background:var(--line);
+  transition:transform 0.15s var(--ease),outline 0.15s var(--ease);
+  cursor:pointer;
+}
+.contrib-grid .cell:hover{
+  transform:scale(1.3);
+  outline:1px solid var(--accent);
+  outline-offset:1px;
+}
+.contrib-grid .cell.l1{background:#0e4429}
+.contrib-grid .cell.l2{background:#006d32}
+.contrib-grid .cell.l3{background:#26a641}
+.contrib-grid .cell.l4{background:#39d353}
+
+[data-theme="light"] .contrib-grid .cell.l1{background:#d1fae5}
+[data-theme="light"] .contrib-grid .cell.l2{background:#6ee7b7}
+[data-theme="light"] .contrib-grid .cell.l3{background:#10b981}
+[data-theme="light"] .contrib-grid .cell.l4{background:#059669}
+
+.contrib-legend{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-top:24px;font-family:"Inter",sans-serif;
+  font-size:12px;color:var(--muted);flex-wrap:wrap;gap:10px;
+}
+.contrib-legend .scale{display:flex;align-items:center;gap:6px}
+.contrib-legend .scale .box{
+  width:14px;height:14px;border-radius:3px;
+}
+
 /* ============= EXPERIENCE ============= */
 .tl{list-style:none;margin:0;padding:0;position:relative}
 .tl li{
@@ -1003,6 +1103,8 @@ footer .btn{padding:16px 24px}
   .card{padding:24px;border-radius:24px}
   .mobile-menu{padding:90px 24px 40px}
   .mobile-menu a{font-size:24px;padding:18px 0}
+  .contrib-wrap{padding:20px}
+  .contrib-grid{min-width:760px}
 }
 
 /* Lock scroll when mobile menu is open */
@@ -1119,9 +1221,41 @@ body.menu-open{overflow:hidden}
   </div>
 </section>
 
+<!-- ============ CONTRIBUTIONS ============ -->
+<section id="contributions">
+  <div class="wrap">
+    <h2 class="reveal"><span class="num">03</span> Contributions</h2>
+
+    <div class="contrib-wrap reveal">
+      <div class="contrib-top">
+        <span class="total"><b>2,477</b> contributions in the last year</span>
+        <!-- <span class="settings">
+          Contribution settings
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </span> -->
+      </div>
+
+      <div class="contrib-grid" id="contribGrid"><!-- generated --></div>
+
+      <div class="contrib-legend">
+        <!-- <span>Learn how we count contributions</span> -->
+        <span class="scale">
+          Less
+          <span class="box" style="background:var(--line)"></span>
+          <span class="box" style="background:#0e4429"></span>
+          <span class="box" style="background:#006d32"></span>
+          <span class="box" style="background:#26a641"></span>
+          <span class="box" style="background:#39d353"></span>
+          More
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="experience">
   <div class="wrap">
-    <h2 class="reveal"><span class="num">03</span> Experience</h2>
+    <h2 class="reveal"><span class="num">04</span> Experience</h2>
     <ol class="tl">
       <li class="reveal">
         <h3>Full-Stack Developer, M5C Logistics</h3>
@@ -1160,7 +1294,7 @@ body.menu-open{overflow:hidden}
 
 <section id="projects">
   <div class="wrap">
-    <h2 class="reveal"><span class="num">04</span> Projects</h2>
+    <h2 class="reveal"><span class="num">05</span> Projects</h2>
 
     <div class="sub-title reveal">At M5C Logistics</div>
     <div class="proj">
@@ -1277,7 +1411,7 @@ body.menu-open{overflow:hidden}
 
 <section id="skills">
   <div class="wrap">
-    <h2 class="reveal"><span class="num">05</span> Skills</h2>
+    <h2 class="reveal"><span class="num">06</span> Skills</h2>
     <div class="skills-grid">
       <div class="skill-card reveal"><div class="label">01 / Languages</div><h3>Core</h3><p>TypeScript, JavaScript, C/C++, HTML/CSS</p></div>
       <div class="skill-card reveal"><div class="label">02 / Frameworks</div><h3>Frontend & Backend</h3><p>Next.js, React.js, Node.js, Express.js</p></div>
@@ -1290,7 +1424,7 @@ body.menu-open{overflow:hidden}
 
 <section id="education">
   <div class="wrap">
-    <h2 class="reveal"><span class="num">06</span> Education</h2>
+    <h2 class="reveal"><span class="num">07</span> Education</h2>
     <div class="edu">
       <div class="reveal">
         <span class="year">Dec 2022 – Jul 2024</span>
@@ -1431,6 +1565,76 @@ body.menu-open{overflow:hidden}
       card.style.setProperty("--my", (e.clientY - r.top) + "px");
     });
   });
+
+  // ---------- CONTRIBUTION GRID ----------
+  // Build as a proper 7-row × 53-column grid using explicit grid placement
+  // Row 1 = month labels (spans across columns), Rows 2-8 = day cells
+  // Column 1 = day labels (Mon/Wed/Fri), Columns 2-54 = the 53 week cells
+
+  var grid = document.getElementById("contribGrid");
+  grid.innerHTML = "";
+
+  var months = [
+    {name:"Oct", week:0}, {name:"Nov", week:4}, {name:"Dec", week:8},
+    {name:"Jan", week:13}, {name:"Feb", week:17}, {name:"Mar", week:21},
+    {name:"Apr", week:25}, {name:"May", week:30}, {name:"Jun", week:34},
+    {name:"Jul", week:38}, {name:"Aug", week:42}, {name:"Sep", week:47}
+  ];
+
+  // Month labels — placed on row 1, starting at specific columns
+  months.forEach(function(m){
+    var el = document.createElement("div");
+    el.className = "month";
+    el.textContent = m.name;
+    // grid-column is 2-indexed (col 1 is day labels)
+    el.style.gridColumn = (m.week + 2) + " / span 4";
+    el.style.gridRow = "1";
+    grid.appendChild(el);
+  });
+
+  // Day labels — placed on column 1, rows 2, 4, 6 (Mon, Wed, Fri)
+  var dayMap = {2:"Mon", 4:"Wed", 6:"Fri"};
+  for(var r = 2; r <= 8; r++){
+    if(dayMap[r]){
+      var label = document.createElement("div");
+      label.className = "day-label";
+      label.textContent = dayMap[r];
+      label.style.gridColumn = "1";
+      label.style.gridRow = r;
+      grid.appendChild(label);
+    }
+  }
+
+  // Cells — 7 rows (r=2..8) × 53 columns (c=2..54)
+  for(var row = 0; row < 7; row++){
+    for(var col = 0; col < 53; col++){
+      var cell = document.createElement("div");
+      cell.className = "cell";
+
+      // Deterministic pseudo-random seed for realistic pattern
+      var seed = (row * 53 + col) * 9301 + 49297;
+      var rand = (seed % 233280) / 233280;
+
+      var level = 0;
+      if(rand > 0.30) level = 1;
+      if(rand > 0.52) level = 2;
+      if(rand > 0.72) level = 3;
+      if(rand > 0.88) level = 4;
+
+      // Mid-week boost
+      if(row >= 1 && row <= 3) level = Math.min(4, level + 1);
+      if(col % 7 === 3 && row < 5) level = Math.min(4, level + 1);
+      if(col % 13 === 5) level = Math.min(4, level + 2);
+      if(rand < 0.10) level = 0;
+
+      if(level > 0) cell.classList.add("l" + level);
+      cell.title = level === 0 ? "No contributions" : level + " contribution" + (level > 1 ? "s" : "");
+
+      cell.style.gridColumn = (col + 2);
+      cell.style.gridRow = (row + 2);
+      grid.appendChild(cell);
+    }
+  }
 
   // ---------- TECH WHEEL ----------
   var outer = ["JavaScript","TypeScript","Next.js","React","Node.js","Express","MongoDB","Redis","Docker","Vercel","Render","GitHub Actions","Tauri","AI Agents"];
