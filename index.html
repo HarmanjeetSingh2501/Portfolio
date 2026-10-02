@@ -23,12 +23,10 @@
   --signal:#fbbf24;
   --on-accent:#fff;
   --glow:0 0 60px rgba(99,102,241,0.35);
-  --glow-2:0 0 80px rgba(168,85,247,0.25);
   --shadow:0 30px 80px -30px rgba(0,0,0,0.8);
   --radius:20px;
   --radius-lg:32px;
   --ease:cubic-bezier(0.22,1,0.36,1);
-  --ease-bounce:cubic-bezier(0.34,1.56,0.64,1);
 }
 
 [data-theme="light"]{
@@ -60,7 +58,6 @@ body{
   transition:background 0.4s var(--ease),color 0.4s var(--ease);
 }
 
-/* Animated noise texture overlay */
 body::before{
   content:"";
   position:fixed;inset:0;
@@ -69,7 +66,6 @@ body::before{
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* Aurora background */
 .aurora{
   position:fixed;inset:0;z-index:0;
   pointer-events:none;overflow:hidden;
@@ -103,7 +99,6 @@ body::before{
   33%{transform:translate(60px,-40px) scale(1.1)}
   66%{transform:translate(-40px,50px) scale(0.95)}
 }
-
 [data-theme="light"] .aurora span{opacity:.2}
 
 a{color:inherit}
@@ -116,7 +111,7 @@ h1,h2,h3,h4{font-family:"Inter",sans-serif;line-height:1.05;margin:0;letter-spac
 
 /* ============= NAV ============= */
 .topbar{
-  position:sticky;top:0;z-index:50;
+  position:sticky;top:0;z-index:100;
   background:color-mix(in srgb,var(--bg) 70%,transparent);
   backdrop-filter:blur(24px) saturate(200%);
   -webkit-backdrop-filter:blur(24px) saturate(200%);
@@ -139,6 +134,7 @@ h1,h2,h3,h4{font-family:"Inter",sans-serif;line-height:1.05;margin:0;letter-spac
   background:var(--panel);
   border:1px solid var(--line);
   transition:all 0.3s var(--ease);
+  flex-shrink:0;
 }
 .logo:hover{
   border-color:var(--accent);
@@ -150,10 +146,25 @@ h1,h2,h3,h4{font-family:"Inter",sans-serif;line-height:1.05;margin:0;letter-spac
   width:24px;height:24px;border-radius:6px;
   background:linear-gradient(135deg,var(--accent),var(--accent-2));
   box-shadow:0 0 16px var(--accent);
+  flex-shrink:0;
 }
 .logo span{color:var(--muted);font-weight:500}
 
-nav .links{display:flex;gap:4px;font-size:14px;font-weight:500;align-items:center}
+/* Desktop nav */
+.nav-right{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+nav .links{
+  display:flex;
+  gap:4px;
+  font-size:14px;
+  font-weight:500;
+  align-items:center;
+}
+
 nav .links a{
   text-decoration:none;
   color:var(--muted);
@@ -176,7 +187,7 @@ nav .links a:hover{
   display:grid;place-items:center;
   color:var(--ink);
   transition:all 0.3s var(--ease);
-  margin-left:8px;
+  flex-shrink:0;
 }
 .theme-toggle:hover{
   border-color:var(--accent);
@@ -186,6 +197,86 @@ nav .links a:hover{
 .theme-toggle .sun{display:none}
 [data-theme="light"] .theme-toggle .sun{display:block}
 [data-theme="light"] .theme-toggle .moon{display:none}
+
+/* Hamburger button (hidden on desktop) */
+.menu-toggle{
+  display:none;
+  background:var(--panel);
+  border:1px solid var(--line);
+  width:40px;height:40px;
+  border-radius:12px;
+  cursor:pointer;
+  color:var(--ink);
+  padding:0;
+  place-items:center;
+  transition:all 0.3s var(--ease);
+  flex-shrink:0;
+}
+.menu-toggle:hover{
+  border-color:var(--accent);
+}
+.menu-toggle .bars{
+  display:block;
+  width:18px;height:14px;
+  position:relative;
+}
+.menu-toggle .bars span{
+  display:block;
+  position:absolute;
+  left:0;right:0;
+  height:2px;
+  background:var(--ink);
+  border-radius:2px;
+  transition:transform 0.35s var(--ease),top 0.35s var(--ease),opacity 0.2s var(--ease);
+}
+.menu-toggle .bars span:nth-child(1){top:0}
+.menu-toggle .bars span:nth-child(2){top:6px}
+.menu-toggle .bars span:nth-child(3){top:12px}
+.menu-toggle.open .bars span:nth-child(1){top:6px;transform:rotate(45deg)}
+.menu-toggle.open .bars span:nth-child(2){opacity:0}
+.menu-toggle.open .bars span:nth-child(3){top:6px;transform:rotate(-45deg)}
+
+/* Mobile drawer */
+.mobile-menu{
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  z-index:90;
+  background:color-mix(in srgb,var(--bg) 96%,transparent);
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+  padding:100px 32px 40px;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 0.3s var(--ease);
+}
+.mobile-menu.open{
+  opacity:1;
+  pointer-events:auto;
+}
+.mobile-menu a{
+  display:block;
+  text-decoration:none;
+  color:var(--ink);
+  font-size:28px;
+  font-weight:700;
+  letter-spacing:-0.02em;
+  padding:20px 0;
+  border-bottom:1px solid var(--line);
+  transition:color 0.25s var(--ease),padding-left 0.3s var(--ease);
+  font-family:"Inter",sans-serif;
+}
+.mobile-menu a:hover,
+.mobile-menu a:focus-visible{
+  color:var(--accent);
+  padding-left:12px;
+}
+.mobile-menu a:last-of-type{
+  border-bottom:0;
+}
 
 .progress{
   position:absolute;left:0;bottom:-1px;height:2px;width:100%;
@@ -200,29 +291,8 @@ nav .links a:hover{
   position:relative;
 }
 
-.hero-badge{
-  display:inline-flex;align-items:center;gap:10px;
-  padding:8px 16px;border-radius:999px;
-  background:var(--panel);
-  border:1px solid var(--line);
-  font-size:13px;font-weight:500;
-  color:var(--muted);
-  margin-bottom:32px;
-  font-family:"JetBrains Mono",monospace;
-}
-.hero-badge .dot{
-  width:8px;height:8px;border-radius:50%;
-  background:#22c55e;
-  box-shadow:0 0 12px #22c55e;
-  animation:pulse 2s ease-in-out infinite;
-}
-@keyframes pulse{
-  0%,100%{opacity:1;transform:scale(1)}
-  50%{opacity:.6;transform:scale(1.2)}
-}
-
 .hero h1{
-  font-size:clamp(56px,11vw,140px);
+  font-size:clamp(52px,11vw,140px);
   font-weight:900;
   letter-spacing:-0.055em;
   line-height:.95;
@@ -238,7 +308,6 @@ nav .links a:hover{
   animation:slideUp 1s var(--ease) forwards;
 }
 .hero h1 .line:nth-child(2) > span{animation-delay:.1s}
-.hero h1 .line:nth-child(3) > span{animation-delay:.2s}
 @keyframes slideUp{
   to{transform:translateY(0)}
 }
@@ -408,7 +477,6 @@ section > .wrap > h2 .num{
   letter-spacing:0;
 }
 
-/* Reveal animation */
 .reveal{
   opacity:0;
   transform:translateY(40px);
@@ -910,17 +978,19 @@ footer .btn{padding:16px 24px}
 }
 .footer-bottom .socials svg{width:16px;height:16px}
 
-/* ============= SCROLL ANIMATION ============= */
-.reveal{will-change:transform,opacity}
-
 /* ============= RESPONSIVE ============= */
 @media(max-width:900px){
   .stats{grid-template-columns:repeat(2,1fr)}
   .stats div:nth-child(2n){border-right:0}
   .stats div:nth-child(-n+3){border-bottom:1px solid var(--line)}
   .stats div:nth-child(5){grid-column:1/-1}
+  
+  /* Hide desktop links, show hamburger */
   nav .links{display:none}
+  .menu-toggle{display:grid}
+  .mobile-menu{display:block}
 }
+
 @media(max-width:640px){
   .wrap{padding:0 20px}
   section{padding:80px 0}
@@ -931,7 +1001,12 @@ footer .btn{padding:16px 24px}
   .hero{padding:60px 0 40px}
   .tl li{padding-left:36px}
   .card{padding:24px;border-radius:24px}
+  .mobile-menu{padding:90px 24px 40px}
+  .mobile-menu a{font-size:24px;padding:18px 0}
 }
+
+/* Lock scroll when mobile menu is open */
+body.menu-open{overflow:hidden}
 </style>
 </head>
 <body>
@@ -943,14 +1018,23 @@ footer .btn{padding:16px 24px}
   <div class="wrap">
     <nav aria-label="Main">
       <a class="logo" href="#top">HS <span>~/portfolio</span></a>
-      <div class="links">
-        <a href="#experience">Experience</a>
-        <a href="#projects">Projects</a>
-        <a href="#skills">Skills</a>
-        <a href="#contact">Contact</a>
+      <div class="nav-right">
+        <div class="links">
+          <a href="#experience">Experience</a>
+          <a href="#projects">Projects</a>
+          <a href="#skills">Skills</a>
+          <a href="#contact">Contact</a>
+        </div>
         <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
           <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
           <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+        </button>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">
+          <span class="bars">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
         </button>
       </div>
     </nav>
@@ -958,12 +1042,16 @@ footer .btn{padding:16px 24px}
   <div class="progress" id="progress"></div>
 </div>
 
+<!-- Mobile drawer -->
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+  <a href="#experience">Experience</a>
+  <a href="#projects">Projects</a>
+  <a href="#skills">Skills</a>
+  <a href="#contact">Contact</a>
+</div>
+
 <div class="wrap">
   <header class="hero" id="top">
-    <!-- <div class="hero-badge">
-      <span class="dot"></span>
-      Available for opportunities · New Delhi
-    </div> -->
     <h1>
       <span class="line"><span>Harmanjeet</span></span>
       <span class="line"><span class="gradient-text">Singh.</span></span>
@@ -975,10 +1063,6 @@ footer .btn{padding:16px 24px}
         <span class="label">Currently</span>
         <span class="value">Full-Stack Dev @ M5C Logistics</span>
       </div>
-      <!-- <div>
-        <span class="label">Focus</span>
-        <span class="value">Next.js · TypeScript · Testing</span>
-      </div> -->
       <div>
         <span class="label">Based in</span>
         <span class="value">New Delhi, IN</span>
@@ -1257,16 +1341,59 @@ footer .btn{padding:16px 24px}
 
 <script>
 (function(){
-  // ---------- THEME TOGGLE ----------
   var root = document.documentElement;
+
+  // ---------- THEME TOGGLE ----------
   var saved = localStorage.getItem("theme");
   if(saved) root.setAttribute("data-theme", saved);
   else if(window.matchMedia("(prefers-color-scheme:light)").matches) root.setAttribute("data-theme","light");
+
   document.getElementById("themeToggle").addEventListener("click", function(){
     var current = root.getAttribute("data-theme");
     var next = current === "light" ? "dark" : "light";
     root.setAttribute("data-theme", next);
     localStorage.setItem("theme", next);
+  });
+
+  // ---------- MOBILE MENU ----------
+  var menuToggle = document.getElementById("menuToggle");
+  var mobileMenu = document.getElementById("mobileMenu");
+  var body = document.body;
+
+  function closeMenu(){
+    menuToggle.classList.remove("open");
+    mobileMenu.classList.remove("open");
+    body.classList.remove("menu-open");
+    menuToggle.setAttribute("aria-expanded", "false");
+    mobileMenu.setAttribute("aria-hidden", "true");
+  }
+  function openMenu(){
+    menuToggle.classList.add("open");
+    mobileMenu.classList.add("open");
+    body.classList.add("menu-open");
+    menuToggle.setAttribute("aria-expanded", "true");
+    mobileMenu.setAttribute("aria-hidden", "false");
+  }
+
+  menuToggle.addEventListener("click", function(){
+    if(mobileMenu.classList.contains("open")) closeMenu();
+    else openMenu();
+  });
+
+  // Close menu when a link is tapped
+  mobileMenu.querySelectorAll("a").forEach(function(a){
+    a.addEventListener("click", closeMenu);
+  });
+
+  // Close menu on escape
+  document.addEventListener("keydown", function(e){
+    if(e.key === "Escape" && mobileMenu.classList.contains("open")) closeMenu();
+  });
+
+  // Close menu when resizing past mobile breakpoint
+  var mq = window.matchMedia("(min-width: 901px)");
+  mq.addEventListener("change", function(e){
+    if(e.matches) closeMenu();
   });
 
   // ---------- SCROLL PROGRESS + TOPBAR ----------
